@@ -15,6 +15,10 @@ const getBooksDataHandle = async () => {
   searchData.value = ''
 }
 
+const getImageUrl = (item) => {
+  return item ? item.volumeInfo?.imageLinks?.smallThumbnail : ''
+}
+
 </script>
 
 <template>
@@ -25,28 +29,34 @@ const getBooksDataHandle = async () => {
         @keyup.enter="getBooksDataHandle" />
     </div>
     <div class="book-results-box">
-      <div class="book-results-total" v-show="books.totalItems">Total: <span style="color: rgb(142, 177, 239)">{{ books.totalItems }} </span>  Results. </div>
+      <div class="book-results-total" v-show="books.totalItems">Total: <span style="color: rgb(142, 177, 239)">{{
+        books.totalItems }} </span> Results. </div>
       <div class="book-results">
         <div class="book-item" v-for="item in books.items">
-          <div class="book-title-author">
-            <a :href="item.volumeInfo.selfLink" target="_blank" class="book-title">{{ item.volumeInfo.title }} {{
-              item.volumeInfo.subtitle }} </a>
-            <span class="book-author" style="margin-left: 10px;" v-for="author in item.volumeInfo.authors">{{ author
-            }}</span>
-            <span class="book-publishedDate" style="margin-left: 10px;">{{ item.volumeInfo.publishedDate }}</span>
+          <div class="book-smallThumbnail">
+            <el-image :src="getImageUrl(item)" fit="fill" />
           </div>
           <div>
-            <el-tag class="book-pageCount" size="small">Page: {{ item.volumeInfo.pageCount }}</el-tag>
-            <el-tag type="danger" size="small" class="book-industryIdentifiers" style="margin-left: 10px;"
-              v-for="i in item.volumeInfo.industryIdentifiers">
-              {{ i.type }} {{ i.identifier }}
-            </el-tag>
+            <div class="book-title-author">
+              <a :href="item.volumeInfo.selfLink" target="_blank" class="book-title">{{ item.volumeInfo.title }} {{
+                item.volumeInfo.subtitle }} </a>
+              <span class="book-author" style="margin-left: 10px;" v-for="author in item.volumeInfo.authors">{{ author
+              }}</span>
+              <span class="book-publishedDate" style="margin-left: 10px;">{{ item.volumeInfo.publishedDate }}</span>
+            </div>
+            <div>
+              <el-tag class="book-pageCount" size="small">Page: {{ item.volumeInfo.pageCount }}</el-tag>
+              <el-tag type="danger" size="small" class="book-industryIdentifiers" style="margin-left: 10px;"
+                v-for="i in item.volumeInfo.industryIdentifiers">
+                {{ i.type }} {{ i.identifier }}
+              </el-tag>
+            </div>
+            <div class="book-description" style="margin-top: 10px;">{{ item.volumeInfo.description }}</div>
           </div>
-          <div class="book-description" style="margin-top: 10px;">{{ item.volumeInfo.description }}</div>
         </div>
       </div>
     </div>
-    <el-backtop :right="100" :bottom="100" />
+    <el-backtop :right="60" :bottom="100" />
   </div>
 </template>
 
@@ -98,6 +108,20 @@ const getBooksDataHandle = async () => {
   padding: 15px 30px;
   border-radius: 15px;
   background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+}
+
+.book-smallThumbnail {
+  overflow: hidden;
+  border-radius: 5px;
+  min-width: 100px;
+  height: 150px;
+  margin-right: 30px;
+}
+
+.book-smallThumbnail .el-image {
+  height: 100%;
+  width: 100%;
 }
 
 .book-title-author {
