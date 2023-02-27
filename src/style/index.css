@@ -1,0 +1,21 @@
+@import './_resetElementplus.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: url(../image/bookstore-bg.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: PingFang SC;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a:hover {
+  opacity: .7;
+}

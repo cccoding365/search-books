@@ -1,0 +1,12 @@
+.el-input {
+  --el-input-bg-color: transparent !important;
+  --el-input-text-color: #fff !important;
+  --el-input-border-radius: 35px !important;
+  width: 50% !important;
+  height: 70px;
+  font-size: 25px !important;
+}
+
+.el-input__inner {
+  text-align: center;
+}
