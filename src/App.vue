@@ -28,25 +28,40 @@ const getImageUrl = (item) => {
       <el-input v-model="searchData" placeholder="Enter the name of the book you want to query"
         @keyup.enter="getBooksDataHandle" />
     </div>
+    <!-- 书籍搜索结果 -->
     <div class="book-results-box">
-      <div class="book-results-total" v-show="books.totalItems">Total: <span style="color: rgb(142, 177, 239)">{{
-        books.totalItems }} </span> Results. </div>
+      <!-- 结果总数量 -->
+      <div class="book-results-total" v-show="books.totalItems">
+        Total: <span style="color: rgb(142, 177, 239)">{{ books.totalItems }} </span> Results.
+      </div>
+      <!-- 书籍列表 -->
       <div class="book-results">
         <div class="book-item" v-for="item in books.items">
+          <!-- 书籍封面 -->
           <div class="book-smallThumbnail">
             <el-image :src="getImageUrl(item)" fit="fill" />
           </div>
-          <div>
-            <div class="book-title-author">
-              <a :href="item.volumeInfo.selfLink" target="_blank" class="book-title">{{ item.volumeInfo.title }} {{
-                item.volumeInfo.subtitle }} </a>
-              <span class="book-author" style="margin-left: 10px;" v-for="author in item.volumeInfo.authors">{{ author
-              }}</span>
-              <span class="book-publishedDate" style="margin-left: 10px;">{{ item.volumeInfo.publishedDate }}</span>
+          <!-- 书籍信息 -->
+          <div class="book-info">
+            <!-- 书名 -->
+            <a class="book-title" :href="item.volumeInfo.selfLink" target="_blank">
+              {{ item.volumeInfo.title }} {{ item.volumeInfo.subtitle }}
+            </a>
+            <div class="book-author-publishedDate">
+              <!-- 作者和出版日期 -->
+              <span class="book-author" style="margin-right: 10px;" v-for="author in item.volumeInfo.authors">
+                {{ author }}
+              </span>
+              <span class="book-publishedDate" style="margin-left: 10px;">
+                {{ item.volumeInfo.publishedDate }}
+              </span>
             </div>
+            <!-- 页数和ISBN号 -->
             <div>
-              <el-tag class="book-pageCount" size="small">Page: {{ item.volumeInfo.pageCount }}</el-tag>
-              <el-tag type="danger" size="small" class="book-industryIdentifiers" style="margin-left: 10px;"
+              <el-tag class="book-pageCount" size="small" style="margin-right: 10px;" v-show="item.volumeInfo.pageCount">
+                Page: {{ item.volumeInfo.pageCount }}
+              </el-tag>
+              <el-tag class="book-industryIdentifiers" type="danger" size="small" style="margin-right: 10px;"
                 v-for="i in item.volumeInfo.industryIdentifiers">
                 {{ i.type }} {{ i.identifier }}
               </el-tag>
@@ -67,7 +82,7 @@ const getImageUrl = (item) => {
   justify-content: center;
   align-items: center;
   padding: 10px 50px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
   min-height: 100vh;
 }
@@ -91,6 +106,9 @@ const getImageUrl = (item) => {
 }
 
 .book-results-total {
+  border-radius: 10px;
+  padding: 0 20px;
+  background-color: rgba(0, 0, 0, 0.7);
   font-size: 18px;
 }
 
@@ -105,7 +123,7 @@ const getImageUrl = (item) => {
   border: 2px solid #fff;
   width: 100%;
   height: fit-content;
-  padding: 15px 30px;
+  padding: 20px 25px;
   border-radius: 15px;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
@@ -113,10 +131,10 @@ const getImageUrl = (item) => {
 
 .book-smallThumbnail {
   overflow: hidden;
-  border-radius: 5px;
-  min-width: 100px;
+  border-radius: 10px;
+  width: 100px;
   height: 150px;
-  margin-right: 30px;
+  margin-right: 25px;
 }
 
 .book-smallThumbnail .el-image {
@@ -124,14 +142,17 @@ const getImageUrl = (item) => {
   width: 100%;
 }
 
-.book-title-author {
-  margin-bottom: 10px;
+.book-info {
+  max-width: calc(100% - 140px);
+}
+
+.book-author-publishedDate {
+  margin: 5px 0;
 }
 
 .book-title {
   font-size: 24px;
   cursor: pointer;
-  margin-bottom: 10px;
 }
 
 .book-author {

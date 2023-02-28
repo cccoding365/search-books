@@ -1,5 +1,5 @@
 .el-input {
-  --el-input-bg-color: transparent !important;
+  --el-input-bg-color: rgba(255, 255, 255, 0.2) !important;
   --el-input-text-color: #fff !important;
   --el-input-border-radius: 35px !important;
   width: 50% !important;
