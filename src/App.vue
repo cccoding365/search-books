@@ -1,22 +1,22 @@
 <script setup>
-import { getBooksData } from './api/index'
-import { ref, reactive } from 'vue'
+import { getBooksData } from './api/index';
+import { ref, reactive } from 'vue';
 
-let searchData = ref('')
+let searchData = ref('');
 let books = reactive({
   items: [],
   totalItems: null
-})
+});
 
 const getBooksDataHandle = async () => {
-  let data = await getBooksData({ q: `${searchData.value}`, maxResults: 20 })
-  books.totalItems = data.totalItems
-  books.items = data.items
-  searchData.value = ''
-}
+  let data = await getBooksData({ q: `${searchData.value}`, maxResults: 20 });
+  books.totalItems = data.totalItems;
+  books.items = data.items;
+  searchData.value = '';
+};
 
 const getImageUrl = (item) => {
-  return item ? item.volumeInfo?.imageLinks?.smallThumbnail : ''
+  return item ? item.volumeInfo?.imageLinks?.smallThumbnail : '';
 }
 
 </script>
@@ -26,13 +26,13 @@ const getImageUrl = (item) => {
     <h1 class="title">Search Books</h1>
     <div class="search-input">
       <el-input v-model="searchData" placeholder="Enter the name of the book you want to query"
-        @keyup.enter="getBooksDataHandle" />
+                @keyup.enter="getBooksDataHandle" />
     </div>
     <!-- 书籍搜索结果 -->
     <div class="book-results-box">
       <!-- 结果总数量 -->
       <div class="book-results-total" v-show="books.totalItems">
-        Total: <span style="color: rgb(142, 177, 239)">{{ books.totalItems }} </span> Results.
+        Total number of books: <span style="font-weight: bold; color: rgb(142, 177, 239)">{{ books.totalItems }} </span>
       </div>
       <!-- 书籍列表 -->
       <div class="book-results">
@@ -62,7 +62,7 @@ const getImageUrl = (item) => {
                 Page: {{ item.volumeInfo.pageCount }}
               </el-tag>
               <el-tag class="book-industryIdentifiers" type="danger" size="small" style="margin-right: 10px;"
-                v-for="i in item.volumeInfo.industryIdentifiers">
+                      v-for="i in item.volumeInfo.industryIdentifiers">
                 {{ i.type }} {{ i.identifier }}
               </el-tag>
             </div>
@@ -107,8 +107,8 @@ const getImageUrl = (item) => {
 
 .book-results-total {
   border-radius: 10px;
-  padding: 0 20px;
-  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.3);
   font-size: 18px;
 }
 
@@ -123,15 +123,15 @@ const getImageUrl = (item) => {
   border: 2px solid #fff;
   width: 100%;
   height: fit-content;
-  padding: 20px 25px;
-  border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 0 25px;
+  background-color: rgba(255, 255, 255, 0.3);
   display: flex;
 }
 
 .book-smallThumbnail {
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 0 10px;
   width: 100px;
   height: 150px;
   margin-right: 25px;
@@ -152,7 +152,13 @@ const getImageUrl = (item) => {
 
 .book-title {
   font-size: 24px;
+  font-weight: bold;
   cursor: pointer;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .book-author {
@@ -161,6 +167,16 @@ const getImageUrl = (item) => {
 }
 
 .book-description {
-  color: rgb(218, 215, 215);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-indent: 2em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+  color: #666;
+  background-color: #ccc;
+  line-height: 24px;
+  border-radius: 5px;
 }
 </style>
